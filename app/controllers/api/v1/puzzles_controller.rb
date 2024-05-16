@@ -3,18 +3,15 @@ class Api::V1::PuzzlesController < ApplicationController
 
   # GET /puzzles
   def index
-    args = { brand: params[:brand].presence, piece_count: params[:piece_count].presence }
-    @puzzles = Puzzle.where(args.compact)
+    args = {
+      'brands.name' => params[:brand].presence,
+      piece_count: params[:piece_count].presence
+    }.compact
 
-    # if params.has_key?(:piece_count)
-    #   # Get puzzles by piece count with Raw SQL
-    #   sql = "select * from puzzles where piece_count = #{params[:piece_count]}"
-    #   @puzzles = ActiveRecord::Base.connection.execute(sql)
-    # elsif params.has_key?(:piece_count)
-      
-    # else 
-    #   @puzzles = Puzzle.all
-    # end
+    @puzzles = Puzzle.all
+    @puzzles._select!("puzzles.*, brands.name as brand_name")
+    @puzzles.joins!(:brands)
+    @puzzles.where!(args.compact) if args.compact.present?
 
     render json: @puzzles
   end

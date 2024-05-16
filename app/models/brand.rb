@@ -1,4 +1,4 @@
-class User < ActiveRecord::Base
+class Brand < ActiveRecord::Base
     has_many :puzzles
   end
   

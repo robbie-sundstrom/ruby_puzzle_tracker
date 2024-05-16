@@ -1,5 +1,5 @@
 class Puzzle < ActiveRecord::Base
-    has_one :brand
+    belongs_to :brands, class_name: "Brand", foreign_key: "brand_id"
     has_many :puzzle_times
   end
   

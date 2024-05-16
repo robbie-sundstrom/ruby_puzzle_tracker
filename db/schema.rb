@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_16_192621) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_16_202621) do
   create_table "brands", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -23,8 +23,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_192621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "puzzle_id"
+    t.integer "user_id"
     t.index ["puzzle_id"], name: "index_puzzle_times_on_puzzle_id"
     t.index ["puzzles_id"], name: "index_puzzle_times_on_puzzles_id"
+    t.index ["user_id"], name: "index_puzzle_times_on_user_id"
   end
 
   create_table "puzzles", force: :cascade do |t|
@@ -44,5 +46,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_192621) do
 
   add_foreign_key "puzzle_times", "puzzles"
   add_foreign_key "puzzle_times", "puzzles", column: "puzzles_id"
+  add_foreign_key "puzzle_times", "users"
   add_foreign_key "puzzles", "brands"
 end
